@@ -1,0 +1,3 @@
+I want to create a foodcourt kiosk which will use multi agent , archestratior as well as generative ui using audio video as well as touch input to leverage a multi agent ai os ssyetm. 
+The llm will be  gemini and the hw will be jetson orin nano. careate a detailed architecture and components as well as all the tech stack we will be used . write now create a detail design with as much as documentaion and architecture as possible. 
+diagram. also give explanantion why you choose one stack over other. No code only documentaion and architecture. put it in doc folder 
