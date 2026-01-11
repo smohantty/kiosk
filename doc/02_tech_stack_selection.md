@@ -236,32 +236,52 @@ Only option for real-time CV on Jetson with full GPU acceleration.
 
 ---
 
-## 9. Frontend: Next.js + Tailwind CSS
+## 9. Frontend: Flutter + A2UI + GenUI
 
-### ✅ What Next.js Does
-- React-based component architecture
-- Client-side rendering for kiosk (no SSR needed)
-- Excellent TypeScript support
-- Hot reload during development
-- Static export option for offline deployment
+> [!IMPORTANT]
+> Changed from Next.js to Flutter for better kiosk performance and native hardware access.
 
-### ❌ What Next.js Doesn't Do
-- **NOT native**: Runs in browser/Chromium
-- **NOT lightweight**: ~500MB RAM for Chromium
-- **NOT for AI**: All inference on backend
+### Why Flutter over Next.js?
 
-### ✅ What Tailwind CSS Does
-- Utility-first rapid styling
-- Easy for LLM to generate valid class names
-- Consistent design tokens
-- Responsive by default
+| Criteria | Flutter | Next.js |
+|----------|---------|---------|
+| Performance | Native-like (Skia) | Browser-based |
+| Kiosk Mode | Native support | Chromium wrapper |
+| Offline | Full support | Limited |
+| Camera/Mic | Direct hardware | WebRTC only |
+| Bundle Size | ~15MB | Browser + ~5MB |
+| RAM Usage | ~200MB | ~500MB (Chromium) |
+| Jetson ARM | Native | Via Chromium |
 
-### ❌ What Tailwind Doesn't Do
-- **NOT semantic CSS**: Class soup can be hard to read
-- **NOT component library**: You build components yourself
+### ✅ What Flutter Does
+- Cross-platform native-like rendering (Skia engine)
+- Direct hardware access (camera, microphone)
+- Rich animation framework built-in
+- Strong typing with Dart
+- Hot reload for rapid development
+- Native kiosk mode on Linux/Jetson
+
+### ❌ What Flutter Doesn't Do
+- **NOT web-native**: Requires native embedding
+- **NOT JavaScript**: Different ecosystem (Dart)
+- **NOT modular delivery**: Full app bundle
+
+### A2UI Design System
+Custom component library for kiosk interfaces:
+- High-contrast, accessible components
+- Touch-optimized (48px minimum touch targets)
+- Smooth animations and transitions
+- Consistent theming system
+
+### GenUI (Generative UI)
+Dynamic UI rendering from backend JSON:
+- Backend sends UI descriptors (JSON)
+- Flutter renders widgets dynamically
+- Enables AI-driven interface changes
+- No app updates needed for UI changes
 
 ### Why Selected
-Industry standard for modern web UIs. The LLM can reliably generate Tailwind classes for Generative UI.
+Better performance on Jetson ARM, native kiosk support, and direct hardware access for camera/microphone.
 
 ---
 
@@ -350,7 +370,7 @@ graph TB
     subgraph "Application"
         FastAPI[FastAPI<br/>HTTP/WebSocket]
         LangGraph[LangGraph<br/>Agent Orchestration]
-        NextJS[Next.js<br/>UI Rendering]
+        Flutter[Flutter + A2UI<br/>GenUI Rendering]
     end
     
     subgraph "Storage"
@@ -368,6 +388,6 @@ graph TB
 | Transport | LiveKit | Audio/video streaming |
 | Events | NATS JetStream | Agent messaging |
 | Backend | FastAPI + LangGraph | Orchestration |
-| Frontend | Next.js + Tailwind | UI rendering |
+| Frontend | Flutter + A2UI | GenUI rendering |
 | State | Redis | Session data |
 | Database | SQLite | Menu catalog |
